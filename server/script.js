@@ -10,8 +10,9 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 
-app.post('/direction', (req, res) => {
+app.get('/direction', (req, res) => {
     console.log(req.query.direction)
+    res.send("Direction Saved")
     
     port.write(req.query.direction, (err) => {
         if (err) {
