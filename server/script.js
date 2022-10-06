@@ -6,6 +6,7 @@ const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
 import express from 'express'
 import cors from 'cors'
 const app = express();
+let num = 0;
 
 app.use(cors())
 app.use(express.json())
@@ -18,7 +19,7 @@ app.get('/direction', (req, res) => {
         if (err) {
             return console.log('Error on write: ', err.message);
         }
-        console.log('Message Written to the Bot');
+        console.log('Message Written to the Bot' + (++num));
     });
 })
 
