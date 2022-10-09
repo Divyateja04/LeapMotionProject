@@ -1,8 +1,8 @@
 #include <WiFi.h>
 
 // Replace with your network credentials
-const char * ssid = "OnePlus Nord2 5G";
-const char * password = "oneplustwo";
+const char* ssid = "OnePlus Nord2 5G";
+const char* password = "oneplustwo";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -11,14 +11,14 @@ WiFiServer server(80);
 String header;
 
 // Auxiliar variables to store the current direction of motor rotation
-String motor1dirn = "OFF";
-String motor2dirn = "OFF";
+String leftdirn = "OFF";
+String rightdirn = "OFF";
 
 // Assign output variables to GPIO pins
-const int motor1p1 = 26;
-const int motor1p2 = 27;
-const int motor2p1 = 2;
-const int motor2p2 = 4;
+const int leftp1 = 26;
+const int leftp2 = 27;
+const int rightp1 = 32;
+const int rightp2 = 33;
 
 // Current time
 unsigned long currentTime = millis();
@@ -29,16 +29,18 @@ const long timeoutTime = 2000;
 
 void setup() {
   Serial.begin(115200);
+
   // Initialize the output variables as outputs
-  pinMode(motor1p1, OUTPUT);
-  pinMode(motor1p2, OUTPUT);
-  pinMode(motor2p1, OUTPUT);
-  pinMode(motor2p2, OUTPUT);
+  pinMode(leftp1, OUTPUT);
+  pinMode(leftp2, OUTPUT);
+  pinMode(rightp1, OUTPUT);
+  pinMode(rightp2, OUTPUT);
+
   // Set outputs to LOW
-  digitalWrite(motor1p1, LOW);
-  digitalWrite(motor1p2, LOW);
-  digitalWrite(motor2p1, LOW);
-  digitalWrite(motor2p2, LOW);
+  digitalWrite(leftp1, LOW);
+  digitalWrite(leftp2, LOW);
+  digitalWrite(rightp1, LOW);
+  digitalWrite(rightp2, LOW);
 
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
@@ -57,20 +59,19 @@ void setup() {
 }
 
 void loop() {
-  WiFiClient client = server.available(); // Listen for incoming clients
+  WiFiClient client = server.available();  // Listen for incoming clients
 
-  if (client) { // If a new client connects,
+  if (client) {  // If a new client connects,
     currentTime = millis();
     previousTime = currentTime;
-    Serial.println("New Client."); // print a message out in the serial port
-    String currentLine = ""; // make a String to hold incoming data from the client
-    while (client.connected() && currentTime - previousTime <= timeoutTime) { // loop while the client's connected
+    //Serial.println("New Client."); // print a message out in the serial port
+    String currentLine = "";                                                   // make a String to hold incoming data from the client
+    while (client.connected() && currentTime - previousTime <= timeoutTime) {  // loop while the client's connected
       currentTime = millis();
-      if (client.available()) { // if there's bytes to read from the client,
-        char c = client.read(); // read a byte, then
-        Serial.write(c); // print it out the serial monitor
+      if (client.available()) {  // if there's bytes to read from the client,
+        char c = client.read();  // read a byte, then
         header += c;
-        if (c == '\n') { // if the byte is a newline character
+        if (c == '\n') {  // if the byte is a newline character
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
           if (currentLine.length() == 0) {
@@ -80,50 +81,53 @@ void loop() {
             client.println("Content-type:text/html");
             client.println("Connection: close");
             client.println();
-
             // turns the GPIOs on and off
             if (header.indexOf("GET /F") >= 0) {
               Serial.println("Forward");
-              motor1dirn = "clock";
-              motor2dirn = "counter-clock";
-              digitalWrite(motor1p1, HIGH);
-              digitalWrite(motor1p2, LOW);
-              digitalWrite(motor2p1, LOW);
-              digitalWrite(motor2p2, HIGH);
-
+              digitalWrite(leftp1, LOW);
+              digitalWrite(leftp2, HIGH);
+              digitalWrite(rightp1, LOW);
+              digitalWrite(rightp2, HIGH);
+              delay(1000);
+              digitalWrite(leftp1, LOW);
+              digitalWrite(leftp2, LOW);
+              digitalWrite(rightp1, LOW);
+              digitalWrite(rightp2, LOW);
             } else if (header.indexOf("GET /B") >= 0) {
               Serial.println("Backward");
-              motor1dirn = "counter-clock";
-              motor2dirn = "clock";
-              digitalWrite(motor1p1, LOW);
-              digitalWrite(motor1p2, HIGH);
-              digitalWrite(motor2p1, HIGH);
-              digitalWrite(motor2p2, LOW);
+              digitalWrite(leftp1, HIGH);
+              digitalWrite(leftp2, LOW);
+              digitalWrite(rightp1, HIGH);
+              digitalWrite(rightp2, LOW);
+              delay(1000);
+              digitalWrite(leftp1, LOW);
+              digitalWrite(leftp2, LOW);
+              digitalWrite(rightp1, LOW);
+              digitalWrite(rightp2, LOW);
             } else if (header.indexOf("GET /R") >= 0) {
               Serial.println("Right");
-              motor1dirn = "counter-clock";
-              motor2dirn = "counter-clock";
-              digitalWrite(motor1p1, HIGH);
-              digitalWrite(motor1p2, LOW);
-              digitalWrite(motor2p1, HIGH);
-              digitalWrite(motor2p2, LOW);
+              digitalWrite(leftp1, LOW);
+              digitalWrite(leftp2, HIGH);
+              digitalWrite(rightp1, HIGH);
+              digitalWrite(rightp2, LOW);
+              delay(1000);
+              digitalWrite(leftp1, LOW);
+              digitalWrite(leftp2, LOW);
+              digitalWrite(rightp1, LOW);
+              digitalWrite(rightp2, LOW);
             } else if (header.indexOf("GET /L") >= 0) {
               Serial.println("Left");
-              motor1dirn = "clock";
-              motor2dirn = "clock";
-              digitalWrite(motor1p1, LOW);
-              digitalWrite(motor1p2, HIGH);
-              digitalWrite(motor2p1, LOW);
-              digitalWrite(motor2p2, HIGH);
-            } else if (header.indexOf("GET /S") >= 0) {
-              Serial.println("Stop");
-              motor1dirn = "OFF";
-              motor2dirn = "OFF";
-              digitalWrite(motor1p1, LOW);
-              digitalWrite(motor1p2, LOW);
-              digitalWrite(motor2p1, LOW);
-              digitalWrite(motor2p2, LOW);
+              digitalWrite(leftp1, HIGH);
+              digitalWrite(leftp2, LOW);
+              digitalWrite(rightp1, LOW);
+              digitalWrite(rightp2, HIGH);
+              delay(1000);
+              digitalWrite(leftp1, LOW);
+              digitalWrite(leftp2, LOW);
+              digitalWrite(rightp1, LOW);
+              digitalWrite(rightp2, LOW);
             }
+            header = "";
           }
         }
       }

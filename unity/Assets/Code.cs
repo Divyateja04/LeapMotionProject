@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
-public class Grenade : MonoBehaviour
+public class Code : MonoBehaviour
 {
     void Start()
     {
@@ -33,10 +33,18 @@ public class Grenade : MonoBehaviour
     }
 
     public void Forward(){
-        StartCoroutine(get("http://localhost:3001/direction?direction=F"));
+        StartCoroutine(get("http://192.168.191.156/F"));
     }
 
     public void Backward(){
-        StartCoroutine(get("http://localhost:3001/direction?direction=B"));
+        StartCoroutine(get("http://192.168.191.156/B"));
+    }
+
+    public void Left(){
+        StartCoroutine(get("http://192.168.191.156/L"));
+    }
+
+    public void Right(){
+        StartCoroutine(get("http://192.168.191.156/R"));
     }
 }
