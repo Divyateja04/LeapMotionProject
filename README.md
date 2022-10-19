@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# Leap Motion Controlled Bot
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Firstly using leap motion camera, we can detect hand gestures and other stuff
 
-## Available Scripts
+![untitled](https://user-images.githubusercontent.com/28446977/196774458-26374779-e810-4285-89ce-f4faf8ab6ae6.png)
+- Sadly this is how I look through the camera
 
-In the project directory, you can run:
+## NOTE: This project had multiple iterations:
+### First Iteration
+- We initially thought we’ll use it with some game probably like fruit ninja or something but again we always have the fact that it will end up looking like some ad we are giving for leap motion. So we though we’ll control the drone using the leap motion Camera
+- Challenges involved in the same are:
+    - The drone’s stability
+    - The signal traveling immediately from the laptop to the pixhawk that is in air
+- Okay so the next thing we did was try to find research on what other things that can be done using the same API
+- We did find a webAPI which can be integrated with any web app and the signal can be sent to the pixhawk using telemetry
+- We tried flying the drones under many modes, but we couldn't promise stability so we gave up 
 
-### `npm start`
+### Second Iteration
+- We went to using a bluetooth module based bot which would send signal from one bluetooth module to another
+- This Was done without unity, basically we have a web app running and a touchfree service instance running. 
+- Both of them interact with each other and send signals to the arduino. 
+- For this use the React Project and the server files
+- But we had a lot of latency issues with bluetooth module and the motors moving due to these
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Third Iteration
+- Here we use an ESP and use it as a webserver and send get requests to the esp bot directly. For this use the ino file for esp and the unity file for interaction with the leap motion sensor
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### References
+- [TouchFree-Tooling-Examples/Examples-Web/AnimatedProgressButtons at develop · ultraleap/TouchFree-Tooling-Examples (github.com)](https://github.com/ultraleap/TouchFree-Tooling-Examples/tree/develop/Examples-Web/AnimatedProgressButtons)
+- [Drone example 1: Acquiring Telemetry Data from Pixhawk Cube to Raspberry Pi with Dronekit in Python - YouTube](https://www.youtube.com/watch?v=vCpxpqxA1Uo)
+- [https://www.youtube.com/watch?v=lgqBFj1rkbw](https://www.youtube.com/watch?v=lgqBFj1rkbw)
+- [Unity API](https://developer.leapmotion.com/unity)
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Members:
+1. Divyateja Pasupuleti
+2. Kumarasamy Chelliah
+3. Gaurav Somai
+ 
