@@ -33,18 +33,18 @@ public class Code : MonoBehaviour
     }
 
     public void Forward(){
-        StartCoroutine(get("http://192.168.191.156/F"));
+        StartCoroutine(get("http://192.168.64.156/F"));
     }
 
     public void Backward(){
-        StartCoroutine(get("http://192.168.191.156/B"));
+        StartCoroutine(get("http://192.168.64.156/B"));
     }
 
     public void Left(){
-        StartCoroutine(get("http://192.168.191.156/L"));
+        StartCoroutine(get("http://192.168.64.156/L"));
     }
 
     public void Right(){
-        StartCoroutine(get("http://192.168.191.156/R"));
+        StartCoroutine(get("http://192.168.64.156/R"));
     }
 }

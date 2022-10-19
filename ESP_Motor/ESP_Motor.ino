@@ -1,8 +1,8 @@
 #include <WiFi.h>
 
 // Replace with your network credentials
-const char* ssid = "OnePlus Nord2 5G";
-const char* password = "oneplustwo";
+const char* ssid = "Realme 8 5G";
+const char* password = "12345678";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -13,6 +13,9 @@ String header;
 // Auxiliar variables to store the current direction of motor rotation
 String leftdirn = "OFF";
 String rightdirn = "OFF";
+
+IPAddress local_IP(192,168,191,156);
+
 
 // Assign output variables to GPIO pins
 const int leftp1 = 26;
