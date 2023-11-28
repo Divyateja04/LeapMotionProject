@@ -2,7 +2,6 @@
 
 - Firstly using leap motion camera, we can detect hand gestures and other stuff
 
-![untitled](https://user-images.githubusercontent.com/28446977/196774458-26374779-e810-4285-89ce-f4faf8ab6ae6.png)
 - Sadly this is how I look through the camera
 
 ## NOTE: This project had multiple iterations:
